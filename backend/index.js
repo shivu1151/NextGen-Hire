@@ -14,21 +14,25 @@ const app = express();
 
 // middleware
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
 const corsOptions = {
   origin: [
     "http://localhost:5173",
-    "https://nextgen-hire.onrender.com",     // backend
-     "https://next-gen-hire-zeta.vercel.app"
+    "https://nextgen-hire.onrender.com",       // backend
+    "https://next-gen-hire-zeta.vercel.app"   // frontend (Vercel)
   ],
   credentials: true,
 };
 app.use(cors(corsOptions));
 
-
 const PORT = process.env.PORT || 3000;
 
+// ✅ Root route should be here
+app.get("/", (req, res) => {
+  res.send("Backend is working fine 🚀");
+});
 
 // api's
 app.use("/api/v1/user", userRoute);
@@ -36,13 +40,7 @@ app.use("/api/v1/company", companyRoute);
 app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", applicationRoute);
 
-
-
-app.listen(PORT,()=>{
-    connectDB();
-    console.log(`Server running at port ${PORT}`);
-})
-
-app.get("/", (req, res) => {
-  res.send("Backend is working fine 🚀");
+app.listen(PORT, () => {
+  connectDB();
+  console.log(`Server running at port ${PORT}`);
 });
