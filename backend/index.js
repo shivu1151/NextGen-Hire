@@ -38,3 +38,7 @@ app.listen(PORT,()=>{
     connectDB();
     console.log(`Server running at port ${PORT}`);
 })
+
+app.get("/", (req, res) => {
+  res.send("Backend is working fine 🚀");
+});
